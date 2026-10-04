@@ -1,0 +1,1432 @@
+{
+ "type": "leafert_maize_reference",
+ "version": 3,
+ "created": "2026-10-04T19:23:18+00:00",
+ "dataset": {
+  "title": "Nitrogen deficiency in maize: annotated image classification dataset",
+  "authors": "Galic, Podnar Zarko, Novoselnik, Salaic",
+  "year": 2023,
+  "doi": "10.17632/g7xnn2bm4g.1",
+  "photos": 1200,
+  "groups": {
+   "N0": 400,
+   "N75": 400,
+   "NFull": 400
+  },
+  "conditions": "field trial, July 2023, around flowering, morning daylight, 238 genotypes"
+ },
+ "cut_kg": 65,
+ "scale_max_kg": 136,
+ "bands": [
+  {
+   "name": "low",
+   "from_kg": 0,
+   "to_kg": 10
+  },
+  {
+   "name": "medium",
+   "from_kg": 10,
+   "to_kg": 25
+  },
+  {
+   "name": "high",
+   "from_kg": 25,
+   "to_kg": null
+  }
+ ],
+ "training_oof": {
+  "balanced_accuracy": 0.716,
+  "by_confidence": {
+   "low": {
+    "share": 0.228,
+    "accuracy": 0.584
+   },
+   "medium": {
+    "share": 0.333,
+    "accuracy": 0.697
+   },
+   "high": {
+    "share": 0.439,
+    "accuracy": 0.815
+   }
+  }
+ },
+ "held_out_test": {
+  "n_photos": 240,
+  "balanced_accuracy": 0.753,
+  "auc": 0.822,
+  "level_mae_kg": 39.2,
+  "level_correlation": 0.52,
+  "mean_level_by_group": {
+   "N0": 45.6,
+   "N75": 78.7,
+   "NFull": 84.5
+  },
+  "by_confidence": {
+   "low": {
+    "share": 0.192,
+    "accuracy": 0.543
+   },
+   "medium": {
+    "share": 0.317,
+    "accuracy": 0.737
+   },
+   "high": {
+    "share": 0.492,
+    "accuracy": 0.839
+   }
+  },
+  "detects_low_n": 0.762,
+  "clears_fertilized": 0.744,
+  "table": {
+   "N0": {
+    "low": 61,
+    "adequate": 19
+   },
+   "N75": {
+    "low": 22,
+    "adequate": 58
+   },
+   "NFull": {
+    "low": 19,
+    "adequate": 61
+   }
+  },
+  "dots": [
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N0",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "N75",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "low"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "medium"
+   },
+   {
+    "group": "NFull",
+    "answer": "adequate",
+    "confidence": "high"
+   },
+   {
+    "group": "NFull",
+    "answer": "low",
+    "confidence": "medium"
+   }
+  ]
+ },
+ "fertilizer": {
+  "corrective_dose_kg_n_ha": 75,
+  "basis": "In the trial, plants given 75 kg N/ha already had the same colour as plants given the full 136 kg N/ha, while unfertilized plants were clearly paler.",
+  "full_rate_kg_n_ha": 136,
+  "products": [
+   {
+    "name": "Urea",
+    "n_percent": 46
+   },
+   {
+    "name": "Ammonium nitrate",
+    "n_percent": 34
+   },
+   {
+    "name": "UAN solution",
+    "n_percent": 32
+   },
+   {
+    "name": "Calcium ammonium nitrate (CAN)",
+    "n_percent": 27
+   },
+   {
+    "name": "Ammonium sulfate",
+    "n_percent": 21
+   }
+  ]
+ },
+ "groups": {
+  "N0": {
+   "frac_yellowish": 0.302,
+   "lab_hue": 120.479
+  },
+  "N75": {
+   "frac_yellowish": 0.1993,
+   "lab_hue": 121.992
+  },
+  "NFull": {
+   "frac_yellowish": 0.1747,
+   "lab_hue": 122.3712
+  }
+ },
+ "range": {
+  "lab_hue": [
+   109.1249,
+   129.036
+  ],
+  "hue_deg": [
+   65.6781,
+   94.8637
+  ],
+  "ngrdi": [
+   0.0296,
+   0.2667
+  ],
+  "vari": [
+   0.0369,
+   0.3223
+  ],
+  "mgrvi": [
+   0.0591,
+   0.498
+  ],
+  "r_chrom": [
+   0.3119,
+   0.4166
+  ],
+  "g_chrom": [
+   0.4296,
+   0.5652
+  ],
+  "b_chrom": [
+   0.0747,
+   0.1901
+  ],
+  "frac_yellowish": [
+   0.0039,
+   0.8627
+  ],
+  "dgci_iqr": [
+   0.0449,
+   0.2547
+  ],
+  "saturation": [
+   0.5764,
+   0.8581
+  ],
+  "lab_a": [
+   -36.5082,
+   -13.4107
+  ],
+  "exg": [
+   0.2889,
+   0.6957
+  ],
+  "gli": [
+   0.2021,
+   0.4445
+  ],
+  "exgr": [
+   0.1528,
+   0.7773
+  ],
+  "rgbvi": [
+   0.4742,
+   0.8258
+  ],
+  "frac_brownish": [
+   0.0,
+   0.0022
+  ],
+  "green_fraction": [
+   0.2053,
+   0.6877
+  ]
+ },
+ "features": [
+  "lab_hue",
+  "hue_deg",
+  "ngrdi",
+  "vari",
+  "mgrvi",
+  "r_chrom",
+  "g_chrom",
+  "b_chrom",
+  "frac_yellowish",
+  "dgci_iqr",
+  "saturation",
+  "lab_a",
+  "exg",
+  "gli",
+  "exgr",
+  "rgbvi",
+  "frac_brownish"
+ ]
+}
