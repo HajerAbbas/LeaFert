@@ -31,6 +31,9 @@ TXT = {
     "en": {
         "empty": "Your nitrogen result and fertilizer plan appear here. Take or upload a photo of the upper part of one maize plant.",
         "retake": "Take the photo again", "noplant": "No maize plant found",
+        "notmaize": "This is not a maize plant", "notmaize_seen": "The photo seems to show: {s}.",
+        "notmaize_tip": "LeaFert measures nitrogen in maize (corn) only. Take a photo of the upper part of one maize plant.",
+        "maize_wait": "Checking that this is a maize plant…",
         "tips": {"no_plant": "Fill most of the frame with the upper part of one plant.",
                  "image_blurry": "Hold the phone still and tap the screen to focus.",
                  "image_too_dark": "Take the photo in daylight, ideally in the morning.",
@@ -74,6 +77,9 @@ TXT = {
     "ar": {
         "empty": "تظهر هنا نتيجة النيتروجين وخطة التسميد. التقط أو ارفع صورة للجزء العلوي من نبات ذرة واحد.",
         "retake": "أعد التقاط الصورة", "noplant": "لم يتم العثور على نبات ذرة",
+        "notmaize": "هذا ليس نبات ذرة", "notmaize_seen": "يبدو أن الصورة تُظهر: {s}.",
+        "notmaize_tip": "يقيس LeaFert النيتروجين في الذرة فقط. التقط صورة للجزء العلوي من نبات ذرة واحد.",
+        "maize_wait": "جارٍ التحقق من أن هذا نبات ذرة…",
         "tips": {"no_plant": "املأ معظم الإطار بالجزء العلوي من نبات واحد.",
                  "image_blurry": "ثبّت الهاتف واضغط على الشاشة للتركيز.",
                  "image_too_dark": "التقط الصورة في ضوء النهار، ويفضل في الصباح.",
@@ -328,11 +334,34 @@ def server(input, output, session):
         await emit(dict(id="quality", group="measure", status="running",
                         label="فحص جودة الصورة" if Lg == "ar" else "Checking photo quality"))
         a = await asyncio.to_thread(assess, data)
-        for ev in steps(a, Lg):
+        evs = steps(a, Lg)
+        for ev in evs[:2]:                                   # photo quality + finding the plant
             await emit(ev)
         image_id = ag.STORE.add_photo(tid, data, a)
-        current.set({"a": a, "image_id": image_id})
         ok, why = ag.agent_status()
+        # Step 2: is it maize? Answered BEFORE any nitrogen result is shown.
+        if a["decision"] == "ok" and ok:
+            current.set({"pending": True})
+            lbl = "التحقق من أنه نبات ذرة" if Lg == "ar" else "Checking it is a maize plant"
+            await emit(dict(id="maize", group="agent", status="running", label=lbl))
+            mc = await ag.check_maize(image_id, Lg)
+            a["maize_check"] = mc
+            if mc and not mc.get("is_maize"):
+                await emit(dict(id="maize", group="agent", status="error", label=lbl,
+                                detail=("ليس نبات ذرة: " if Lg == "ar" else "Not maize: ") + (mc.get("seen") or "")))
+                skip = "تم التخطي" if Lg == "ar" else "Skipped"
+                for ev in evs[2:]:
+                    await emit(dict(ev, status="skip", detail=skip))
+                a.update(decision="not_maize", reasons=["not_maize"])
+                current.set({"a": a, "image_id": image_id})
+                await session.send_custom_message("analysis_done", {"decision": a["decision"]})
+                return
+            await emit(dict(id="maize", group="agent", status="done" if mc else "skip", label=lbl,
+                            detail=(mc.get("seen") or "") if mc else
+                            ("تعذّر التحقق، المتابعة" if Lg == "ar" else "Could not check, continuing")))
+        for ev in evs[2:]:                                   # colour, nitrogen level, plan
+            await emit(ev)
+        current.set({"a": a, "image_id": image_id})
         if ok:
             agent_wanted.set(True)
             agent_job.invoke(image_id, input.note(), Lg)
@@ -348,7 +377,16 @@ def server(input, output, session):
         c = current()
         if c is None:
             return ui.div(ui.p(t["empty"]), class_="empty")
+        if c.get("pending"):
+            return ui.div(ui.div(ui.span(class_="spinner"), ui.span(t["maize_wait"]), class_="waiting"), class_="card")
         a = c["a"]
+        if a["decision"] == "not_maize":
+            seen = (a.get("maize_check") or {}).get("seen")
+            return ui.div(ui.h3(t["notmaize"], class_="verdict v-retake"),
+                          ui.p(t["notmaize_seen"].format(s=seen)) if seen else None,
+                          ui.tags.ul(ui.tags.li(t["notmaize_tip"]), class_="tips-list"),
+                          _shot({k: v for k, v in a.items() if k != "features"}, t),
+                          class_="card")
         if a["decision"] != "ok":
             title = t["noplant"] if "no_plant" in a["reasons"] else t["retake"]
             tips = [t["tips"][r] for r in dict.fromkeys(a["reasons"]) if r in t["tips"]]
@@ -388,7 +426,7 @@ def server(input, output, session):
         ok, why = ag.agent_status()
         if not ok:
             return ui.div(ui.p(t["agent_off"].format(why=why)), class_="card card-quiet")
-        if not agent_wanted():
+        if not agent_wanted() or c.get("pending") or c["a"].get("decision") == "not_maize":
             return None
         st = agent_job.status()
         if st == "running":
