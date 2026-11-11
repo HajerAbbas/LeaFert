@@ -124,7 +124,7 @@ def slim(a: dict) -> dict:
     """What the AI agent sees (no images, no per-photo test data)."""
     f = a.get("features") or {}
     return {
-        "decision": a.get("decision"), "reasons": a.get("reasons"),
+        "decision": a.get("decision"), "reasons": a.get("reasons"), "maize_check": a.get("maize_check"),
         "nitrogen_level_kg_n_ha_equivalent": a.get("level_kg"), "cut_kg": a.get("cut_kg"),
         "status": a.get("status"), "confidence": a.get("confidence"),
         "accuracy_at_this_confidence": a.get("accuracy"),
