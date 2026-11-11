@@ -157,8 +157,8 @@ A photo message contains the photo and a MEASUREMENT block computed by LeaFert's
 1,200 field-trial photos (0, 75 and 136 kg N/ha). The measurement is the only source of numbers.
 
 For a photo:
-1. If the photo clearly does not show a maize plant, use n_status "not_maize" and ask for a photo
-   of the upper part of one maize plant.
+1. The MEASUREMENT has already been confirmed to show a maize plant (maize_check). Only if the photo
+   clearly does not show maize, use n_status "not_maize" and ask for a photo of one maize plant.
 2. decision "retake": n_status "retake"; explain the reasons and how to fix them.
 3. Otherwise report status ("low" or "adequate"), the nitrogen level in kg N/ha, and the confidence
    with its tested accuracy. Be clear and direct; do not hedge beyond the stated confidence.
@@ -340,6 +340,75 @@ def _agent():
                 checkpointer=InMemorySaver(serde=serde),
             )
         return _AGENT
+
+
+# =============================================================================
+# Maize check (runs BEFORE the nitrogen result is shown)
+# =============================================================================
+class MaizeCheck(BaseModel):
+    """Is the photo a maize (corn) plant?"""
+    is_maize: bool = Field(description="True only if the main plant in the photo is maize (corn, Zea mays).")
+    seen: str = Field(description="What the photo shows, in a few words, e.g. 'maize leaves' or 'a rose bush'.")
+
+
+MAIZE_PROMPT = ("Look at the photo. Is the main plant maize (corn, Zea mays)? Maize has long, narrow, "
+                "strap-shaped leaves with a clear pale midrib and parallel veins, growing from a thick stalk. "
+                "Answer is_maize=false for any other plant (grass lawns, weeds, trees, shrubs, flowers, "
+                "house plants, vegetables) or if there is no real plant. Write 'seen' in {lang}.")
+
+_MAIZE_CACHE: dict[str, dict] = {}
+
+
+async def check_maize(image_id: str, lang: str = "en") -> Optional[dict]:
+    """One small vision call. Returns {"is_maize", "seen"} or None when the AI
+    cannot answer (offline, quota, error) - then the app carries on as before."""
+    if not agent_status()[0] or image_id not in STORE.images:
+        return None
+    from langchain.messages import HumanMessage
+    data = STORE.images[image_id]
+    key = hashlib.sha1(data).hexdigest() + lang
+    if key in _MAIZE_CACHE:
+        return _MAIZE_CACHE[key]
+    try:
+        prev = _preview_jpeg_b64(decode_image(data), max_side=512)
+    except ValueError:
+        return None
+    msg = HumanMessage(content=[
+        {"type": "text", "text": MAIZE_PROMPT.format(lang="Arabic" if lang == "ar" else "English")},
+        {"type": "image", "base64": prev, "mime_type": "image/jpeg"}])
+    est = 600
+    if _MODEL_OVERRIDE is not None:
+        chain = [("custom", _MODEL_OVERRIDE)]
+    else:
+        from langchain.chat_models import init_chat_model
+        chain = [(m, None) for m in model_chain()]
+    for name, mdl in chain:
+        skip_quota = mdl is not None and getattr(mdl, "_skip_quota", False)
+        if not skip_quota and mdl is None:
+            wait, _ = quota.GUARD.wait_needed(name, est)
+            if wait > 10:                                    # don't hold the farmer up: try the next model
+                continue
+            if wait > 0:
+                await asyncio.sleep(wait)
+            quota.GUARD.reserve(name, est)
+        try:
+            if mdl is None:
+                mdl = init_chat_model(name, max_retries=0, timeout=20)
+            res = await asyncio.wait_for(mdl.with_structured_output(MaizeCheck).ainvoke([msg]), timeout=25)
+        except Exception as e:  # noqa: BLE001
+            if quota.is_rate_limit(e) and name != "custom":
+                kind, retry = quota.classify_rate_limit(e)
+                quota.GUARD.on_rate_limit(name, kind, retry)
+                continue
+            return None
+        if name != "custom":
+            quota.GUARD.settle(name, est, None)
+        out = res.model_dump() if hasattr(res, "model_dump") else dict(res)
+        _MAIZE_CACHE[key] = out
+        if len(_MAIZE_CACHE) > 200:
+            _MAIZE_CACHE.pop(next(iter(_MAIZE_CACHE)))
+        return out
+    return None
 
 
 # =============================================================================
