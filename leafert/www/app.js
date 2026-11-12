@@ -26,7 +26,7 @@
           measure: "نموذج LeaFert", agent: "المساعد الذكي", note: "ملاحظة اختيارية، مثل مرحلة النمو أو تاريخ آخر تسميد",
           chat: "اسأل عن هذا النبات أو السماد أو الطقس…" },
   };
-  let LANG = "en";
+  let LANG = "ar";                          // default language: Arabic
   const tr = (k) => STATUS[LANG][k] || STATUS.en[k] || k;
 
   function setLang(l) {
@@ -252,7 +252,7 @@
     reduce.addEventListener && reduce.addEventListener("change", () => { layers.forEach((l) => l.removeAttribute("transform")); onScroll(); });
     watchEvidence();
     frame();
-    root.dataset.lang = LANG;
+    setLang(LANG);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire); else wire();
 
