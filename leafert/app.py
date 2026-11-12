@@ -34,6 +34,9 @@ TXT = {
         "notmaize": "This is not a maize plant", "notmaize_seen": "The photo seems to show: {s}.",
         "notmaize_tip": "LeaFert measures nitrogen in maize (corn) only. Take a photo of the upper part of one maize plant.",
         "maize_wait": "Checking that this is a maize plant…",
+        "demo_btn": "Calculate anyway (demo)",
+        "demo_note": "Demo only: this plant is not maize, so the nitrogen level and plan below are not valid for it. "
+                     "The model was trained on maize photos only.",
         "tips": {"no_plant": "Fill most of the frame with the upper part of one plant.",
                  "image_blurry": "Hold the phone still and tap the screen to focus.",
                  "image_too_dark": "Take the photo in daylight, ideally in the morning.",
@@ -80,6 +83,9 @@ TXT = {
         "notmaize": "هذا ليس نبات ذرة", "notmaize_seen": "يبدو أن الصورة تُظهر: {s}.",
         "notmaize_tip": "يقيس LeaFert النيتروجين في الذرة فقط. التقط صورة للجزء العلوي من نبات ذرة واحد.",
         "maize_wait": "جارٍ التحقق من أن هذا نبات ذرة…",
+        "demo_btn": "احسب على أي حال (عرض تجريبي)",
+        "demo_note": "عرض تجريبي فقط: هذا النبات ليس ذرة، لذا فإن مستوى النيتروجين والخطة أدناه غير صالحين له. "
+                     "دُرّب النموذج على صور الذرة فقط.",
         "tips": {"no_plant": "املأ معظم الإطار بالجزء العلوي من نبات واحد.",
                  "image_blurry": "ثبّت الهاتف واضغط على الشاشة للتركيز.",
                  "image_too_dark": "التقط الصورة في ضوء النهار، ويفضل في الصباح.",
@@ -174,8 +180,8 @@ NAV = f"""
     <a href="#limits">{L("Good to know", "معلومات مهمة")}</a>
   </nav>
   <div class="lang" role="group" aria-label="Language">
-    <button type="button" class="lang-btn is-on" data-lang="en">English</button>
-    <button type="button" class="lang-btn" data-lang="ar">العربية</button>
+    <button type="button" class="lang-btn" data-lang="en">English</button>
+    <button type="button" class="lang-btn is-on" data-lang="ar">العربية</button>
   </div>
 </header>
 """
@@ -188,6 +194,8 @@ app_ui = ui.page_fluid(
         ui.tags.link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap"),
         ui.tags.link(rel="stylesheet", href="styles.css"),
         ui.tags.title("LeaFert – maize nitrogen and fertilizer plan"),
+        # Arabic is the default language: set it before the page paints (no English flash)
+        ui.tags.script('var h=document.documentElement;h.dataset.lang="ar";h.lang="ar";h.dir="rtl";'),
     ),
     ui.HTML(NAV),
     ui.HTML(hero()),
@@ -307,7 +315,7 @@ def server(input, output, session):
             v = input.lang()
         except Exception:  # noqa: BLE001 - not sent yet
             v = None
-        return v if v in ("en", "ar") else "en"
+        return v if v in ("en", "ar") else "ar"
 
     async def emit(ev: dict):
         await session.send_custom_message("step", ev)
@@ -352,7 +360,7 @@ def server(input, output, session):
                 skip = "تم التخطي" if Lg == "ar" else "Skipped"
                 for ev in evs[2:]:
                     await emit(dict(ev, status="skip", detail=skip))
-                a.update(decision="not_maize", reasons=["not_maize"])
+                a.update(decision="not_maize", reasons=["not_maize"], demo_ok=a["decision"] == "ok")
                 current.set({"a": a, "image_id": image_id})
                 await session.send_custom_message("analysis_done", {"decision": a["decision"]})
                 return
@@ -370,6 +378,20 @@ def server(input, output, session):
                             label="المساعد الذكي" if Lg == "ar" else "AI assistant", detail=why))
         await session.send_custom_message("analysis_done", {"decision": a.get("decision")})
 
+    @reactive.effect
+    @reactive.event(input.demo_anyway)
+    async def _demo():
+        """Not maize, but the user asked to see the calculation anyway (demonstration)."""
+        c = current()
+        if not c or "a" not in c or c["a"].get("decision") != "not_maize" or not c["a"].get("demo_ok"):
+            return
+        Lg = lang()
+        a = dict(c["a"], decision="ok", reasons=[], demo=True)
+        for ev in steps(a, Lg)[2:]:                          # colour, nitrogen level, plan
+            await emit(dict(ev, detail=ev.get("detail", "") + (" (تجريبي)" if Lg == "ar" else " (demo)")))
+        ag.STORE.analysis[c["image_id"]] = a
+        current.set({"a": a, "image_id": c["image_id"]})
+
     @render.ui
     def measurement():
         Lg = lang()
@@ -386,6 +408,8 @@ def server(input, output, session):
                           ui.p(t["notmaize_seen"].format(s=seen)) if seen else None,
                           ui.tags.ul(ui.tags.li(t["notmaize_tip"]), class_="tips-list"),
                           _shot({k: v for k, v in a.items() if k != "features"}, t),
+                          ui.input_action_button("demo_anyway", t["demo_btn"], class_="btn-ghost")
+                          if a.get("demo_ok") else None,
                           class_="card")
         if a["decision"] != "ok":
             title = t["noplant"] if "no_plant" in a["reasons"] else t["retake"]
@@ -396,7 +420,7 @@ def server(input, output, session):
                           ui.tags.details(ui.tags.summary(t["how_read"]),
                                           ui.tags.ol(*[ui.tags.li(x) for x in reasoning(a, Lg)], class_="why-list")),
                           class_="card")
-        warns = []
+        warns = [t["demo_note"]] if a.get("demo") else []
         if "unusual_photo" in a["warnings"]:
             warns.append(t["w_unusual"])
         if "glare" in a["warnings"]:
